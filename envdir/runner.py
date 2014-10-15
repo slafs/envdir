@@ -62,7 +62,7 @@ class Runner(object):
                          "Type 'exit' or 'Ctrl+D' to return.\n" %
                          self.path(args[0]))
         sys.stdout.flush()
-        self.open(args[0], 2)
+        env = self.open(args[0], 2)
 
         if 'SHELL' in os.environ:
             shell = os.environ['SHELL']
@@ -70,6 +70,11 @@ class Runner(object):
             shell = os.environ['COMSPEC']
         else:
             raise Response('Unable to detect current environment shell')
+
+        if 'PS1' in os.environ:
+            os.environ['ENVDIR_PS1'] = \
+                '[envdir:{0}]{1}'.format(os.path.basename(env.path),
+                                         os.environ['PS1'])
 
         try:
             subprocess.call([shell])
