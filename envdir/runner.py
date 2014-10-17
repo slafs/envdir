@@ -71,10 +71,8 @@ class Runner(object):
         else:
             raise Response('Unable to detect current environment shell')
 
-        if 'PS1' in os.environ:
-            os.environ['ENVDIR_PS1'] = \
-                '[envdir:{0}]{1}'.format(os.path.basename(env.path),
-                                         os.environ['PS1'])
+        os.environ['ENVSHELL_PATH'] = env.path
+        os.environ['ENVSHELL_NAME'] = os.path.basename(env.path)
 
         try:
             subprocess.call([shell])
