@@ -53,4 +53,19 @@ For example:
 
 To leave the subshell, simply use the ``exit`` command or press ``Ctrl+D``.
 
+After running ``envshell`` you will have two extra environment variables
+available:
+
+* ``ENVSHELL_PATH`` contains a full path to a directory that was used
+  as an argument for ``envshell``.
+* ``ENVSHELL_NAME`` is just a basename of that directory.
+
+Those variables can help you set a prompt for your newly created shell session.
+
+For example with Bash you can have this line at the end of a
+``~/.bashrc`` file to have a convenient prefix in the prompt::
+
+    if [ -n "$ENVSHELL_NAME" ]; then PS1=[envshell:$ENVSHELL_NAME]$PS1; fi
+
+
 .. _envdir: http://cr.yp.to/daemontools/envdir.html
