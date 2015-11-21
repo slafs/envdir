@@ -250,6 +250,17 @@ def test_shell_doesnt_exist(shell, tmpenvdir):
     assert "Unable to find shell" in response.value.message
 
 
+def test_shell_extra_vars(shell, tmpenvdir):
+    "Test presence of extra env vars after running shell"
+    path = str(tmpenvdir)
+
+    with py.test.raises(Response):
+        shell('envshell', path)
+
+    assert os.environ['ENVSHELL_PATH'] == path
+    assert os.environ['ENVSHELL_NAME'] == os.path.basename(path)
+
+
 def test_read(tmpenvdir):
     tmpenvdir.join('READ').write('test')
     applied = envdir.read(str(tmpenvdir))
